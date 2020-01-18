@@ -11,11 +11,35 @@ I hope it is helpful anyway.
 
 This software is distributed under the MIT License. See COPYING for details. 
 
-## Install
-There are a few things you need in order to install this plugin:
 
+## Build
+In order to build the package, there must be downloaded and registered in maven repo some libraries
+which are not available in the maven repo due to license restrictions from a well known company for such stuff.
+
+see:  https://examples.javacodegeeks.com/software-development/atlassian/setting-system-atlassian-jira-add-development/
+
+Download the following libs:
+https://www.oracle.com/java/technologies/java-archive-downloads-java-plat-downloads.html#7110-jndi-1.2.1-oth-JPR
+https://download.oracle.com/otndocs/jcp/7089-jta-1.0.1B-mr-class-oth-JSpec/?submit=Download
+
+rename them to jar
+
+Install to your local Maven Repo:
+mvn install:install-file -DgroupId=jndi -DartifactId=jndi -Dversion=1.2.1 -Dpackaging=jar -Dfile=$HOME/Downloads/jndi-1_2_1.jar
+mvn install:install-file -DgroupId=jta -DartifactId=jta -Dversion=1.0.1 -Dpackaging=jar -Dfile=$HOME/Downloads/jta-1_0_1B-classes.jar
+
+build it with mvn install
+
+
+Alternative way to build
 * Get the Atlassian SDK as described at [Atlassian](https://developer.atlassian.com/display/DOCS/Set+up+the+Atlassian+Plugin+SDK+and+Build+a+Project)
 * Build the .jar file with the `atlas-package` command in the root folder (containing the pom.xml) 
+
+
+
+## Install in Jira
+There are a few things you need in order to install this plugin:
+
 * Stop your JIRA instance if it is running
 * Copy the target/russo-1.0.jar file to the WEB-INF/libs folder of your JIRA installation
 * Modify the WEB-INF/classes/seraph-config.xml file by commenting out existing auth classes and adding ```<authenticator class="ch.fuchsnet.seraph.RussoAuthenticator"/>```
